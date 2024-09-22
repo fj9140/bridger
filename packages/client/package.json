@@ -2,7 +2,7 @@
     "name": "@bridger/client",
     "version": "0.0.0",
     "scripts": {
-        "dev": "DEV=true tsx helpers/build.tsx"
+        "dev": "DEV=true tsx helpers/build.ts"
     },
     "devDependencies": {
         "typescript": "^5.6.2"
