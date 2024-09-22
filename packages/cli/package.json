@@ -1,0 +1,11 @@
+{
+    "version": "0.0.0",
+    "name": "bridger",
+    "main":"build/index.js",
+    "bin":{
+        "bridger":"build/index.js"
+    },
+    "scripts": {
+        "dev":"DEV=true tsx helpers/build.ts"
+    }
+}
