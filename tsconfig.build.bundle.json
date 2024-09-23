@@ -2,7 +2,9 @@
     "extends":"./tsconfig.build.regular.json",
     "compilerOptions": {
         "paths": {
-            "bridger":["./package/cli/src"]
+            "bridger":["./packages/cli/src"],
+            "@bridger/internals":["./packages/internals/src"],
+            "@bridger/get-platform":["./packages/get-platform/src"]
         }
     }
 }

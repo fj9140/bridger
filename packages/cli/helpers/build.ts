@@ -7,4 +7,4 @@ const cliBuildConfig:BuildOptions={
     outfile:'build/index',
 }
 
-void build([cliBuildConfig]);
+build([cliBuildConfig]);
