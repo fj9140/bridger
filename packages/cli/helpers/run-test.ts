@@ -1,9 +1,9 @@
-import { execa, execaSync } from "execa";
+import { exec } from "child_process";
 
 export async function main(){
-    execa('jest',['--silent'],{
-        stdio:'inherit',
-        env:process.env,
+    exec("jest",(err,stdout,stderr)=>{
+        console.log(stdout)
+        console.error(err)
     })
 }
 

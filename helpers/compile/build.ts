@@ -1,6 +1,7 @@
 import * as  esbuild from 'esbuild'
 import { omit,pipe,transduce } from "../blaze";
 import path from "path";
+import {globby, globbySync} from "globby";
 
 export type BuildOptions=esbuild.BuildOptions &{
     name?:string
@@ -20,7 +21,11 @@ const applyDefaults=(options:BuildOptions):BuildOptions=>{
         format:'cjs',
         outExtension:{'.js':'.js'},
         resolveExtensions:['.ts','.js','.node'],
-        ...options
+        entryPoints:globbySync('./src/**/*.{j,t}s',{
+            ignore:["./src/__test__/**/*"]
+        }),
+        ...options,
+        outfile:options.outfile??undefined
     }
 }
 
@@ -45,6 +50,22 @@ async function executeEsBuild(options:BuildOptions){
     return [build] as const
 }
 
+function addDefaultOutDir(options:BuildOptions){
+    if(options.outfile ===undefined){
+        options.outdir=getOutDir(options)
+    }
+    return options
+}
+
 export async function build(optionsArr:BuildOptions[]){
-    return transduce.async(createBuildOptions(optionsArr),pipe.async(addExtensionFormat,executeEsBuild))
+    return transduce.async(createBuildOptions(optionsArr),pipe.async(addExtensionFormat,addDefaultOutDir,executeEsBuild))
+}
+
+
+function getOutDir(options:BuildOptions){
+    if(options.outfile !==undefined){
+        return path.dirname(options.outfile)
+    }
+    
+    return options.outdir ?? "dist"
 }
