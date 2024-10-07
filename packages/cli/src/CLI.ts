@@ -7,7 +7,7 @@ import {
   isError,
 } from "@bridger/internals";
 import { bold, green, dim } from "kleur";
-import { Observable, of } from "rxjs";
+import { catchError, map, Observable, of, throwError } from "rxjs";
 
 export class CLI implements Command {
   constructor(
@@ -47,9 +47,11 @@ export class CLI implements Command {
 
     const cmd = this.cmds[cmdName];
     if (cmd) {
-      return cmd.parse([]);
+      let argsForCmd:string[]
+      argsForCmd=args._.slice(1)
+      return cmd.parse(argsForCmd);
     } else {
-      return of(unknownCommand(this.help(), args._[0]));
+      return of(unknownCommand(this.help(), args._[0]))
     }
   }
 

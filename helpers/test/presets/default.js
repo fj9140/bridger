@@ -7,6 +7,10 @@ module.exports = {
   transformIgnorePatterns: [],
   testEnvironment: "node",
   testMatch: ["**/src/**/*.test.ts"],
+  collectCoverage:process.env.CI?true:false,
+  coverageReporters:['clover'],
+  coverageDirectory:'src/__tests__/coverage',
+  collectCoverageFrom:['src/**/*.ts','!**/__tests/**/*','!src/**/*.test.ts'],
   reporters: [
     "default",
     [
